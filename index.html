@@ -2,10 +2,11 @@
     
     <head>
         <meta charset="utf-8">
-        <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+        
         <style>
             h1, h2, h3 {
                 font-family: 'Montserrat', sans-serif;
@@ -16,106 +17,232 @@
             p, div {
                 font-family: 'Montserrat', serif;
             }
-        </style> 
+
+            .roundbtn {
+                border-radius: 30%;
+            }
+
+            .hiddentext {
+                display: none;
+            }
+
+            .navmenu {
+                position: sticky;
+                top: 0;
+                background-color: white;
+            }
+
+            a {
+                cursor: pointer;
+            }
+
+            .nav_padding {
+                min-height: 70px;
+            }
+
+            .secret {
+                display: none;
+            }
+
+        </style>
+        <script>
+            //default lang is english, if browser location is ITA switch to ITA
+            function start() {
+                document.querySelectorAll('.italian').forEach( el => el.classList.toggle('hiddentext') );
+                if(navigator.language.toString().toLowerCase().indexOf('it') > -1) { togglelang() }
+                onresize();
+                document.getElementById('sec_proj').style.setProperty('--animate-duration', '.3s'); //speedup animation for articles
+            }
+
+            function onresize() {
+                //set padding between section, set empty space on the last section for layout
+                var h = document.querySelector('.navmenu').offsetHeight + 10;
+                var h2 = document.querySelector('.last_section').offsetHeight;
+                if(h > 60) {
+                    document.querySelectorAll('.nav_padding').forEach( el => el.setAttribute("style","height:"+h+"px") );
+                }
+                document.getElementById("sec_empty").style.height = window.innerHeight - h2 - 50;
+            }
+
+            var togglelang = function() {
+                //switch text
+                document.querySelectorAll('.italian').forEach( el => el.classList.toggle('hiddentext') );
+                document.querySelectorAll('.english').forEach( el => el.classList.toggle('hiddentext') );
+                //btn animation
+                document.getElementById('btn_lang').classList.add('animate__animated','animate__bounce');
+                document.getElementById('btn_lang').addEventListener('animationend', () => {
+                    document.getElementById('btn_lang').classList.remove('animate__animated','animate__bounce'); 
+                });
+
+            }
+
+            var toggledarkmode = (function () {
+                var toggle = true;
+                return (function () {
+                    var color = toggle ? 'dark' : 'light';
+                    toggle = !toggle;
+                    document.querySelector("html").setAttribute('data-theme', color); //set theme
+                    //set navbar bg color
+                    var navelem = document.querySelector(".navmenu");
+                    color == 'dark' ? navelem.style.backgroundColor = '#13171f' : navelem.style.backgroundColor = "#fff";
+                    //btn animation
+                    document.getElementById('btn_night').classList.add('animate__animated','animate__bounce');
+                    document.getElementById('btn_night').addEventListener('animationend', () => {
+                        document.getElementById('btn_night').classList.remove('animate__animated','animate__bounce'); 
+                    });
+
+                } )
+            })();
+
+            function scrollinto(elemname) {
+                document.querySelector(elemname).scrollIntoView({ behavior: 'smooth' });
+            }
+
+            function showsecret(id_) {
+                document.getElementById("secret_"+id_).style.display = 'block';
+                document.getElementById("btn_secret_"+id_).style.display = 'none';
+                scrollinto('#proj_'+id_);
+                
+                document.getElementById('secret_'+id_).classList.add('animate__animated','animate__fadeIn');
+                document.getElementById('secret_'+id_).addEventListener('animationend', () => {
+                        document.getElementById('secret_'+id_).classList.remove('animate__animated','animate__fadeIn'); 
+                        
+                        document.getElementById("secret_"+id_).style.display = 'block';
+                        document.getElementById("btn_secret_"+id_).style.display = 'none';
+                    });
+            }
+
+            function hidesecret(id_) {
+                document.getElementById('secret_'+id_).classList.add('animate__animated','animate__fadeOut');
+                scrollinto('#proj_'+id_);
+                
+                document.getElementById('secret_'+id_).addEventListener('animationend', () => {
+                        document.getElementById('secret_'+id_).classList.remove('animate__animated','animate__fadeOut'); 
+                        
+                        document.getElementById("secret_"+id_).style.display = 'none';
+                        document.getElementById("btn_secret_"+id_).style.display = 'block';
+                    });
+            }
+        </script>
         <title>Fasino.work</title>
     </head>
-    <body>
+    <body onload="start()" onresize="onresize()">
         <header class="container">
             <nav>
             <ul>
                 <li>
-                    <h1>Fasino.work</h1>
+                    <h3>Fasino's<br>dev portfolio</h3>
                 </li>
             </ul>
-            <ul><li><a href="#">View in English</a></li></ul>
+            <ul><li><button id="btn_lang" onclick="togglelang()" class="roundbtn contrast"><span class="italian">🇮🇹</span><span class="english">🇬🇧</span></button></li>
+            <ul><li><button id="btn_night" onclick="toggledarkmode()" class="roundbtn outline secondary">🌙</button></li>
             </nav>
-            <center><h2>Fasino's portfolio</h2></center>
         </header>
+        
         <main class="container">
         
+            <nav class="navmenu">
+                <ul></ul>
+                <ul><li>
+                    <a class="outline contrast" onclick="scrollinto('#sec_bio')">Bio</a>
+                </li></ul>
+                <ul><li>
+                    <a class="outline contrast" onclick="scrollinto('#sec_proj')">Progetti</a>
+                </li></ul>
+                <ul><li>
+                    <a class="outline contrast" onclick="scrollinto('#sec_contacts')">Contatti</a>
+                </li></ul>
+                <ul></ul>
+            </nav>
 
-        <section>
+        <section id="sec_bio">
+            <div class="nav_padding"></div>
             <h1>Bio</h1>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus sed sequi architecto ea aliquid a, beatae, excepturi numquam ut voluptatem atque sit repudiandae minus ullam illum debitis! Ullam, aut reprehenderit.</p>
+            <p class="italian">Lorem ITA dolor sit amet consectetur adipisicing elit. Ducimus sed sequi architecto ea aliquid a, beatae, excepturi numquam ut voluptatem atque sit repudiandae minus ullam illum debitis! Ullam, aut reprehenderit.</p>
+            <p class="english">Lorem ENG dolor sit amet consectetur adipisicing elit. Ducimus sed sequi architecto ea aliquid a, beatae, excepturi numquam ut voluptatem atque sit repudiandae minus ullam illum debitis! Ullam, aut reprehenderit.</p>
         </section>
         
-        <hr>
-        <br>
-        <section>
+        <section id="sec_proj">
+            <div class="nav_padding"></div>
             <h1>I miei progetti</h1>
-        <article>
+
+        <article id="proj_1">
             <h2>Progetto 1</h2>
             <span class="grid">
-            <span>
-                <figure>
-                <img src="img1.jpg" alt="Minimal landscape" />
-                <figcaption>
-                    Image from here
-                </figcaption>
-            </figure>
-            </span><span>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi quasi sed cum aperiam voluptate doloribus dignissimos natus hic mollitia, voluptatem odio dicta delectus harum voluptatum ipsam possimus culpa expedita dolorum?</p>
-            
-            <details>
-                more text here!
-            
-            <summary>Read more...</summary>
-            </details>
-
+                <span>
+                    <figure>
+                    <img src="img1.jpg" alt="Minimal landscape" />
+                </figure>
+                </span>
+                <span>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi quasi sed cum aperiam voluptate doloribus dignissimos natus hic mollitia, voluptatem odio dicta delectus harum voluptatum ipsam possimus culpa expedita dolorum?</p>
+                    <a id="btn_secret_1" onclick="showsecret('1')">ESPANDI</a>
+                </span>
             </span>
+            <div id="secret_1" class="secret">
+                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fuga, ipsum fugiat non eaque porro suscipit illum voluptate nulla, doloremque ducimus omnis? Adipisci quibusdam sapiente officia. Voluptates, facilis. Praesentium, quas laudantium?</p>
+                <a onclick="hidesecret('1')">CHIUDI</a>
+            </div>
         </article>
-        <br>
-        <article>
+
+        <article id="proj_2">
             <h2>Progetto 2</h2>
             <span class="grid">
-            <span>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi quasi sed cum aperiam voluptate doloribus dignissimos natus hic mollitia, voluptatem odio dicta delectus harum voluptatum ipsam possimus culpa expedita dolorum?</p>
-            
-            <details>
-                more text here!
-            
-            <summary>Read more...</summary>
-            </details>
+                <span>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi quasi sed cum aperiam voluptate doloribus dignissimos natus hic mollitia, voluptatem odio dicta delectus harum voluptatum ipsam possimus culpa expedita dolorum?</p>
+                    <a id="btn_secret_2" onclick="showsecret('2')">ESPANDI</a>
+                </span>
+                <span>
+                    <figure>
+                        <img src="img1.jpg" alt="Minimal landscape" />
+                    </figure>
+                </span>
 
             </span>
-            <span>
-                <figure>
-                <img src="img1.jpg" alt="Minimal landscape" />
-                <figcaption>
-                    Image from here
-                </figcaption>
-            </figure>
-            </span>
+            <div id="secret_2" class="secret">
+                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fuga, ipsum fugiat non eaque porro suscipit illum voluptate nulla, doloremque ducimus omnis? Adipisci quibusdam sapiente officia. Voluptates, facilis. Praesentium, quas laudantium?</p>
+                <a onclick="hidesecret('2')">CHIUDI</a>
+            </div>
         </article>
-        <article>
+
+        <article id="proj_3">
             <h2>Progetto 3</h2>
             <span class="grid">
-            <span>
-                <figure>
-                <img src="img1.jpg" alt="Minimal landscape" />
-                <figcaption>
-                    Image from here
-                </figcaption>
-            </figure>
-            </span><span>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi quasi sed cum aperiam voluptate doloribus dignissimos natus hic mollitia, voluptatem odio dicta delectus harum voluptatum ipsam possimus culpa expedita dolorum?</p>
-            
-            <details>
-                more text here!
-            
-            <summary>Read more...</summary>
-            </details>
-
+                <span>
+                    <figure>
+                    <img src="img1.jpg" alt="Minimal landscape" />
+                </figure>
+                </span>
+                <span>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi quasi sed cum aperiam voluptate doloribus dignissimos natus hic mollitia, voluptatem odio dicta delectus harum voluptatum ipsam possimus culpa expedita dolorum?</p>
+                    <a id="btn_secret_3" onclick="showsecret('3')">ESPANDI</a>
+                </span>
             </span>
+            <div id="secret_3" class="secret">
+                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fuga, ipsum fugiat non eaque porro suscipit illum voluptate nulla, doloremque ducimus omnis? Adipisci quibusdam sapiente officia. Voluptates, facilis. Praesentium, quas laudantium?</p>
+                <a onclick="hidesecret('3')">CHIUDI</a>
+            </div>
         </article>
-        <br>
+
+
+        </section>
+        
+        <section id="sec_contacts" class="last_section">
+            <div class="nav_padding"></div>
+            <h1>Contatti</h1>
+            <nav>
+            <ul></ul>
+            <ul><li>
+                Email: prova@fasino.work<br>
+                LinkedIn: @fasino<br>
+                Github: @gfasino
+            </li></ul>
+            <ul></ul>
+            </nav>
         </section>
 
-        <hr>
-        <br>
-        <section>
-            <h1>Contatti</h1>
-            <center><p>Email: prova@fasino.work</p></center>
+        <!-- empty section -->
+        <section id="sec_empty" style="min-height: 300px;">
         </section>
     </main>
     </body>

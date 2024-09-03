@@ -131,7 +131,7 @@
             <nav>
             <ul>
                 <li>
-                    <h3>Fasino's<br>dev portfolio</h3>
+                    <h3>Giovanni<br>Fasino</h3>
                 </li>
             </ul>
             <ul><li><button id="btn_lang" onclick="togglelang()" class="roundbtn contrast"><span class="italian">🇮🇹</span><span class="english">🇬🇧</span></button></li>
@@ -141,16 +141,28 @@
         
         <main class="container">
         
+<!--
             <nav class="navmenu">
                 <ul></ul>
                 <ul><li>
                     <a class="outline contrast" onclick="scrollinto('#sec_bio')">Bio</a>
                 </li></ul>
                 <ul><li>
-                    <a class="outline contrast" onclick="scrollinto('#sec_proj')">Progetti</a>
+                    <a class="outline contrast" onclick="scrollinto('#sec_proj')"><span class="italian">Progetti</span><span class="english">Projects</span></a>
                 </li></ul>
                 <ul><li>
-                    <a class="outline contrast" onclick="scrollinto('#sec_contacts')">Contatti</a>
+                    <a class="outline contrast" onclick="scrollinto('#sec_contacts')"><span class="italian">Contatti</span><span class="english">Contact me</span></a>
+                </li></ul>
+                <ul></ul>
+            </nav>
+-->
+            <nav class="navmenu">
+                <ul></ul>
+                <ul><li>
+                    <a class="outline contrast" onclick="scrollinto('#sec_bio')">Bio</a>
+                </li></ul>
+                <ul><li>
+                    <a class="outline contrast" onclick="scrollinto('#sec_contacts')"><span class="italian">Contatti</span><span class="english">Contact me</span></a>
                 </li></ul>
                 <ul></ul>
             </nav>
@@ -158,13 +170,13 @@
         <section id="sec_bio">
             <div class="nav_padding"></div>
             <h1>Bio</h1>
-            <p class="italian">Lorem ITA dolor sit amet consectetur adipisicing elit. Ducimus sed sequi architecto ea aliquid a, beatae, excepturi numquam ut voluptatem atque sit repudiandae minus ullam illum debitis! Ullam, aut reprehenderit.</p>
-            <p class="english">Lorem ENG dolor sit amet consectetur adipisicing elit. Ducimus sed sequi architecto ea aliquid a, beatae, excepturi numquam ut voluptatem atque sit repudiandae minus ullam illum debitis! Ullam, aut reprehenderit.</p>
+            <p class="italian">Neolaureato in Ingegneria Informatica con una solida esperienza pratica in progetti tecnologici innovativi ed un forte background in sviluppo software.<br><br>Sono appassionato di tecnologie emergenti e sempre pronto ad affrontare nuove sfide nel campo dell'informatica e dell'ingegneria, con un forte orientamento alla risoluzione di problemi e al lavoro di squadra.</p>
+            <p class="english">Recent Computer Engineering graduate with solid hands-on experience in innovative technology projects and a strong background in software development.<br><br>Passionate about emerging technologies and always ready to tackle new challenges in the field of computing and engineering, with a strong focus on problem-solving and teamwork.</p>
         </section>
         
-        <section id="sec_proj">
+        <section id="sec_proj" style="display: none">
             <div class="nav_padding"></div>
-            <h1>I miei progetti</h1>
+            <h1><span class="italian">Progetti</span><span class="english">Projects</span></h1>
 
         <article id="proj_1">
             <h2>Progetto 1</h2>
@@ -229,13 +241,13 @@
         
         <section id="sec_contacts" class="last_section">
             <div class="nav_padding"></div>
-            <h1>Contatti</h1>
+            <h1><span class="italian">Contatti</span><span class="english">Contact me</span></h1>
             <nav>
             <ul></ul>
             <ul><li>
-                Email: prova@fasino.work<br>
-                LinkedIn: @fasino<br>
-                Github: @gfasino
+                Email: <a href="mailto:jobs@fasino.work">jobs@fasino.work</a><br>
+                LinkedIn: <a target="_blank" href="https://linkedin.com/in/giovannifasino">giovannifasino</a><br>
+                Github: <a target="_blank" href="https://github.com/gfasino">gfasino</a>
             </li></ul>
             <ul></ul>
             </nav>
